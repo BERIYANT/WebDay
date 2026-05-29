@@ -77,3 +77,25 @@ Route::middleware(['auth'])->group(function () {
 
 // Pakasir Payment Gateway Webhook
 Route::post('/payment/pakasir/webhook', [PremiumController::class, 'handlePakasirWebhook'])->name('payment.pakasir.webhook');
+
+// Route sementara untuk cPanel (Bisa dihapus setelah berhasil)
+Route::get('/jalankan-migrasi', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate --force');
+        return 'Migrasi database berhasil!<br><pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
+Route::get('/bersih-cache', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+        return 'Cache berhasil dibersihkan!';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
