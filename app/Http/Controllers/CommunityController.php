@@ -56,7 +56,7 @@ class CommunityController extends Controller
 
         CommunityPost::create([
             'user_id' => $user->id,
-            'content' => $request->content,
+            'content' => $request->input('content'),
             'likes_count' => 0
         ]);
 
@@ -112,7 +112,7 @@ class CommunityController extends Controller
         CommunityComment::create([
             'user_id' => $user->id,
             'post_id' => $post->id,
-            'content' => $request->content
+            'content' => $request->input('content')
         ]);
 
         return redirect()->route('community.index')->with('success', 'Komentar berhasil ditambahkan!');

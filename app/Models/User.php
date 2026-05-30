@@ -191,4 +191,9 @@ class User extends Authenticatable
             
         return round(($completedTodayCount / $todayChallengesCount) * 100);
     }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class)->orderBy('created_at', 'desc');
+    }
 }

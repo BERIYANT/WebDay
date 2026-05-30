@@ -74,6 +74,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingsController::class, 'updateProfile'])->name('settings.update');
 
+    // 8b. Tentang Kami / About Us
+    Route::get('/about', [\App\Http\Controllers\AboutController::class, 'index'])->name('about.index');
+    Route::post('/about/saran', [\App\Http\Controllers\AboutController::class, 'storeSaran'])->name('about.saran');
+
     // 9. Admin Routes Group
     Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
@@ -102,6 +106,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/transactions', [App\Http\Controllers\Admin\AdminTransactionController::class, 'index'])->name('transactions.index');
         Route::post('/transactions/{transaction}/approve', [App\Http\Controllers\Admin\AdminTransactionController::class, 'approve'])->name('transactions.approve');
         Route::post('/transactions/{transaction}/reject', [App\Http\Controllers\Admin\AdminTransactionController::class, 'reject'])->name('transactions.reject');
+
+        // Kelola Saran / Feedback
+        Route::get('/feedbacks', [\App\Http\Controllers\Admin\AdminFeedbackController::class, 'index'])->name('feedbacks.index');
+        Route::delete('/feedbacks/{feedback}', [\App\Http\Controllers\Admin\AdminFeedbackController::class, 'destroy'])->name('feedbacks.destroy');
     });
 });
 
@@ -113,6 +121,15 @@ Route::get('/jalankan-migrasi', function() {
     try {
         \Illuminate\Support\Facades\Artisan::call('migrate --force');
         return 'Migrasi database berhasil!<br><pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
+Route::get('/jalankan-ulang-migrasi', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate:fresh --force');
+        return 'Migrasi database berhasil disegarkan kembali (fresh)!<br><pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>';
     } catch (\Exception $e) {
         return 'Error: ' . $e->getMessage();
     }

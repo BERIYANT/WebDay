@@ -21,7 +21,7 @@
     </div>
 
     <!-- Statistics Cards Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         <!-- Card 1: Total Users -->
         <div class="bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-3xl p-6 flex items-center justify-between shadow-sm hover:scale-[1.02] transition-transform">
             <div class="space-y-1">
@@ -77,6 +77,20 @@
             </div>
             <div class="w-12 h-12 {{ $stats['pending_transactions'] > 0 ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-500' : 'bg-slate-50 dark:bg-slate-800/40 text-slate-500' }} rounded-2xl flex items-center justify-center shadow-inner">
                 <i data-lucide="credit-card" class="w-6 h-6"></i>
+            </div>
+        </div>
+
+        <!-- Card 5: Saran Masuk -->
+        <div class="bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-3xl p-6 flex items-center justify-between shadow-sm hover:scale-[1.02] transition-transform">
+            <div class="space-y-1">
+                <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Saran Masuk</span>
+                <p class="text-3xl font-black text-slate-800 dark:text-white">{{ number_format($stats['total_feedbacks']) }}</p>
+                <a href="{{ route('admin.feedbacks.index') }}" class="text-xs text-indigo-500 hover:text-indigo-600 font-extrabold flex items-center gap-1 mt-2">
+                    Kelola Saran <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </a>
+            </div>
+            <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 rounded-2xl flex items-center justify-center shadow-inner">
+                <i data-lucide="message-square" class="w-6 h-6"></i>
             </div>
         </div>
     </div>

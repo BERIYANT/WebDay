@@ -23,6 +23,7 @@ class AdminDashboardController extends Controller
             'total_posts' => CommunityPost::count(),
             'pending_transactions' => Transaction::where('status', 'pending')->count(),
             'total_revenue' => Transaction::where('status', 'completed')->sum('price'),
+            'total_feedbacks' => \App\Models\Feedback::count(),
         ];
 
         // Fetch recent pending transactions

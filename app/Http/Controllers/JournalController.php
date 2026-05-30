@@ -96,7 +96,7 @@ class JournalController extends Controller
         // Create journal entry
         Journal::create([
             'user_id' => $user->id,
-            'content' => $request->content,
+            'content' => $request->input('content'),
             'mood' => $request->mood
         ]);
 

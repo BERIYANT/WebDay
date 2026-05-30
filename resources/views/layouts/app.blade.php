@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Web Day Challenge') - Self Development Gamification</title>
     
+    <!-- Compelling SEO Meta Tags -->
+    <meta name="description" content="Web Day Challenge membantu pengguna membangun kebiasaan positif melalui challenge harian interaktif, AI reminder, leaderboard, dan komunitas suportif.">
+    <meta name="keywords" content="webday, habit challenge, daily challenge, kebiasaan positif, produktivitas, pengembangan diri">
+    <meta name="author" content="WebDay Challenge Team">
+    
+    <!-- Open Graph (OG) Meta Tags for Social Media and Search Engine Previews -->
+    <meta property="og:title" content="Web Day Challenge - Self Development Gamification">
+    <meta property="og:description" content="Mulai bangun kebiasaan positif harian Anda bersama WebDay Challenge secara interaktif dan menyenangkan.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('images/logo.png') }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Web Day Challenge - Self Development Gamification">
+    <meta name="twitter:description" content="Mulai bangun kebiasaan positif harian Anda bersama WebDay Challenge secara interaktif dan menyenangkan.">
+    <meta name="twitter:image" content="{{ asset('images/logo.png') }}">
+    
+    <!-- Favicon and Logo Icons -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -193,6 +218,11 @@
             </a>
 
             <hr class="border-slate-100 dark:border-darkBorder my-4">
+
+            <a href="{{ route('about.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white transition-all {{ Route::is('about.index') ? 'sidebar-active' : '' }}">
+                <i data-lucide="help-circle" class="w-5 h-5"></i>
+                <span>Tentang Kami</span>
+            </a>
 
             <a href="{{ route('settings.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white transition-all {{ Route::is('settings.index') ? 'sidebar-active' : '' }}">
                 <i data-lucide="settings" class="w-5 h-5"></i>
