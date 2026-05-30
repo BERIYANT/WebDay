@@ -68,11 +68,41 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/premium/redeem', [PremiumController::class, 'redeemPoints'])->name('premium.redeem');
     Route::post('/premium/claim-theme', [PremiumController::class, 'claimTheme'])->name('premium.claim-theme');
     Route::post('/premium/claim-badge', [PremiumController::class, 'claimBadge'])->name('premium.claim-badge');
-    Route::post('/premium/approve/{transaction}', [PremiumController::class, 'approveTransaction'])->name('premium.approve');
+    Route::post('/premium/approve/{transaction}', [PremiumController::class, 'approveTransaction'])->name('premium.approve')->middleware('admin');
 
     // 8. User Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingsController::class, 'updateProfile'])->name('settings.update');
+
+    // 9. Admin Routes Group
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
+        
+        // Kelola Pengguna
+        Route::get('/users', [App\Http\Controllers\Admin\AdminUserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}/edit', [App\Http\Controllers\Admin\AdminUserController::class, 'edit'])->name('users.edit');
+        Route::post('/users/{user}/update', [App\Http\Controllers\Admin\AdminUserController::class, 'update'])->name('users.update');
+        Route::post('/users/{user}/toggle-premium', [App\Http\Controllers\Admin\AdminUserController::class, 'togglePremium'])->name('users.toggle-premium');
+        Route::delete('/users/{user}', [App\Http\Controllers\Admin\AdminUserController::class, 'destroy'])->name('users.destroy');
+        
+        // Kelola Tantangan (Challenges)
+        Route::get('/challenges', [App\Http\Controllers\Admin\AdminChallengeController::class, 'index'])->name('challenges.index');
+        Route::get('/challenges/create', [App\Http\Controllers\Admin\AdminChallengeController::class, 'create'])->name('challenges.create');
+        Route::post('/challenges', [App\Http\Controllers\Admin\AdminChallengeController::class, 'store'])->name('challenges.store');
+        Route::get('/challenges/{challenge}/edit', [App\Http\Controllers\Admin\AdminChallengeController::class, 'edit'])->name('challenges.edit');
+        Route::post('/challenges/{challenge}/update', [App\Http\Controllers\Admin\AdminChallengeController::class, 'update'])->name('challenges.update');
+        Route::delete('/challenges/{challenge}', [App\Http\Controllers\Admin\AdminChallengeController::class, 'destroy'])->name('challenges.destroy');
+        
+        // Kelola Postingan & Komentar Komunitas
+        Route::get('/posts', [App\Http\Controllers\Admin\AdminCommunityController::class, 'posts'])->name('posts.index');
+        Route::delete('/posts/{post}', [App\Http\Controllers\Admin\AdminCommunityController::class, 'destroyPost'])->name('posts.destroy');
+        Route::delete('/comments/{comment}', [App\Http\Controllers\Admin\AdminCommunityController::class, 'destroyComment'])->name('comments.destroy');
+        
+        // Kelola Transaksi Premium Manual
+        Route::get('/transactions', [App\Http\Controllers\Admin\AdminTransactionController::class, 'index'])->name('transactions.index');
+        Route::post('/transactions/{transaction}/approve', [App\Http\Controllers\Admin\AdminTransactionController::class, 'approve'])->name('transactions.approve');
+        Route::post('/transactions/{transaction}/reject', [App\Http\Controllers\Admin\AdminTransactionController::class, 'reject'])->name('transactions.reject');
+    });
 });
 
 // Pakasir Payment Gateway Webhook

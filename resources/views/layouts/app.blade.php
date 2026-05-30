@@ -198,6 +198,16 @@
                 <i data-lucide="settings" class="w-5 h-5"></i>
                 <span>Pengaturan</span>
             </a>
+
+            @if(Auth::user()->isAdmin())
+                <hr class="border-slate-100 dark:border-darkBorder my-4">
+                <span class="px-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-2">Administrasi</span>
+                
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20 hover:text-rose-700 dark:hover:text-white transition-all {{ Request::is('admin*') ? 'sidebar-active' : '' }}">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-rose-500"></i>
+                    <span>Admin Panel</span>
+                </a>
+            @endif
         </nav>
 
         <!-- User Profile Footer inside Sidebar -->

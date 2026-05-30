@@ -221,7 +221,25 @@ class DatabaseSeeder extends Seeder
             'theme_dark_unlocked' => false,
             'badge_unlocked' => false,
             'selected_badge' => 'Warrior',
-            'selected_theme' => 'light'
+            'selected_theme' => 'light',
+            'role' => 'user'
+        ]);
+
+        // Create Admin User
+        User::create([
+            'name' => 'admin',
+            'email' => 'admin@webday.com',
+            'password' => Hash::make('password'),
+            'points' => 9999,
+            'streak' => 1,
+            'last_login_date' => Carbon::now(),
+            'is_premium' => true,
+            'premium_until' => Carbon::now()->addYears(10),
+            'theme_dark_unlocked' => true,
+            'badge_unlocked' => true,
+            'selected_badge' => 'Legend',
+            'selected_theme' => 'light',
+            'role' => 'admin'
         ]);
 
         // 4. Set up Progress Partner accountability link (Mutual Follow)

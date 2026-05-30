@@ -30,7 +30,8 @@ class User extends Authenticatable
         'theme_dark_unlocked',
         'badge_unlocked',
         'selected_badge',
-        'selected_theme'
+        'selected_theme',
+        'role'
     ];
 
     protected $hidden = [
@@ -75,6 +76,11 @@ class User extends Authenticatable
         }
 
         $this->save();
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 
     public function isPremium()
