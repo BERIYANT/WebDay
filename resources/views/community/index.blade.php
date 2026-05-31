@@ -13,7 +13,7 @@
         <div class="bg-white dark:bg-darkCard p-6 rounded-3xl border border-slate-200/60 dark:border-darkBorder shadow-sm space-y-4">
             <div class="flex items-center gap-3">
                 <div class="relative w-10 h-10">
-                    @if(Auth::user()->profile_image)
+                    @if(Auth::user()->profile_image && file_exists(public_path('uploads/profiles/' . Auth::user()->profile_image)))
                         <img src="{{ asset('uploads/profiles/' . Auth::user()->profile_image) }}" class="w-10 h-10 rounded-full object-cover" alt="Avatar">
                     @else
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-sm uppercase">

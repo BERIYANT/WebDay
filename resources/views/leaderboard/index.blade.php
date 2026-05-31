@@ -31,7 +31,7 @@
                             <!-- Crown indicator -->
                             <i data-lucide="crown" class="w-8 h-8 {{ $style['crown'] }} absolute -top-6 left-1/2 transform -translate-x-1/2 animate-bounce"></i>
                             
-                            @if($rankUser->profile_image)
+                            @if($rankUser->profile_image && file_exists(public_path('uploads/profiles/' . $rankUser->profile_image)))
                                 <img src="{{ asset('uploads/profiles/' . $rankUser->profile_image) }}" class="w-16 h-16 rounded-full object-cover border-2 border-white" alt="Avatar">
                             @else
                                 <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-xl uppercase border-2 border-white shadow">
@@ -116,7 +116,7 @@
                                 @endif
                             </td>
                             <td class="py-4 px-6 flex items-center gap-3">
-                                @if($rankUser->profile_image)
+                                @if($rankUser->profile_image && file_exists(public_path('uploads/profiles/' . $rankUser->profile_image)))
                                     <img src="{{ asset('uploads/profiles/' . $rankUser->profile_image) }}" class="w-8 h-8 rounded-full object-cover" alt="Avatar">
                                 @else
                                     <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-[10px] uppercase shadow-sm">

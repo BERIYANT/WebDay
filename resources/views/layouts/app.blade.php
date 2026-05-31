@@ -245,7 +245,7 @@
             <!-- Profile Info Card -->
             <div class="bg-slate-50/80 dark:bg-slate-800/30 border border-slate-200/50 dark:border-darkBorder/40 p-3 rounded-2xl flex items-center gap-3 shadow-sm">
                 <div class="relative flex-shrink-0">
-                    @if(Auth::user()->profile_image)
+                    @if(Auth::user()->profile_image && file_exists(public_path('uploads/profiles/' . Auth::user()->profile_image)))
                         <img src="{{ asset('uploads/profiles/' . Auth::user()->profile_image) }}" class="w-10 h-10 rounded-full object-cover border border-slate-200 dark:border-slate-700" alt="Avatar">
                     @else
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-sm uppercase">
@@ -308,7 +308,7 @@
 
                 <!-- Profile Image instead of Notifications Bell -->
                 <a href="{{ route('settings.index') }}" class="relative cursor-pointer group flex-shrink-0">
-                    @if(Auth::user()->profile_image)
+                    @if(Auth::user()->profile_image && file_exists(public_path('uploads/profiles/' . Auth::user()->profile_image)))
                         <img src="{{ asset('uploads/profiles/' . Auth::user()->profile_image) }}" class="w-9 h-9 rounded-full object-cover border border-slate-200 dark:border-slate-700 group-hover:scale-105 transition-transform" alt="Avatar">
                     @else
                         <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-[10px] uppercase group-hover:scale-105 transition-transform">

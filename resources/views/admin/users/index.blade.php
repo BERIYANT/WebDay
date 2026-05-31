@@ -86,7 +86,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-3">
                                     <div class="relative">
-                                        @if($user->profile_image)
+                                        @if($user->profile_image && file_exists(public_path('uploads/profiles/' . $user->profile_image)))
                                             <img src="{{ asset('uploads/profiles/' . $user->profile_image) }}" class="w-10 h-10 rounded-full object-cover border border-slate-200 dark:border-slate-700" alt="Avatar">
                                         @else
                                             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-sm uppercase">

@@ -65,7 +65,7 @@
                                 : 'bg-slate-50/40 dark:bg-slate-800/10 border-slate-100 dark:border-darkBorder/40 hover:border-slate-200 dark:hover:border-slate-700' }}">
                             <div class="flex items-center gap-2.5 min-w-0">
                                 <div class="relative flex-shrink-0">
-                                    @if($p->profile_image)
+                                    @if($p->profile_image && file_exists(public_path('uploads/profiles/' . $p->profile_image)))
                                         <img src="{{ asset('uploads/profiles/' . $p->profile_image) }}" class="w-9 h-9 rounded-full object-cover" alt="Avatar">
                                     @else
                                         <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-xs uppercase">
@@ -110,7 +110,7 @@
                     @forelse($followers as $f)
                         <div class="p-3 bg-slate-50/40 dark:bg-slate-800/10 border border-slate-100 dark:border-darkBorder/40 rounded-2xl flex items-center justify-between gap-3">
                             <div class="flex items-center gap-2 min-w-0">
-                                @if($f->profile_image)
+                                @if($f->profile_image && file_exists(public_path('uploads/profiles/' . $f->profile_image)))
                                     <img src="{{ asset('uploads/profiles/' . $f->profile_image) }}" class="w-8 h-8 rounded-full object-cover flex-shrink-0" alt="Avatar">
                                 @else
                                     <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold flex items-center justify-center text-[10px] uppercase flex-shrink-0">
@@ -140,7 +140,7 @@
                     @forelse($following as $f)
                         <div class="p-3 bg-slate-50/40 dark:bg-slate-800/10 border border-slate-100 dark:border-darkBorder/40 rounded-2xl flex items-center justify-between gap-3">
                             <div class="flex items-center gap-2 min-w-0">
-                                @if($f->profile_image)
+                                @if($f->profile_image && file_exists(public_path('uploads/profiles/' . $f->profile_image)))
                                     <img src="{{ asset('uploads/profiles/' . $f->profile_image) }}" class="w-8 h-8 rounded-full object-cover flex-shrink-0" alt="Avatar">
                                 @else
                                     <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold flex items-center justify-center text-[10px] uppercase flex-shrink-0">
@@ -209,7 +209,7 @@
                                 <!-- User stats column -->
                                 <div class="space-y-3 text-center">
                                     <div class="mx-auto w-10 h-10">
-                                        @if(Auth::user()->profile_image)
+                                        @if(Auth::user()->profile_image && file_exists(public_path('uploads/profiles/' . Auth::user()->profile_image)))
                                             <img src="{{ asset('uploads/profiles/' . Auth::user()->profile_image) }}" class="w-10 h-10 rounded-full object-cover border border-slate-100 dark:border-slate-800 shadow" alt="Avatar">
                                         @else
                                             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-xs uppercase border border-slate-100 shadow">
@@ -238,7 +238,7 @@
                                 <!-- Partner stats column -->
                                 <div class="space-y-3 text-center">
                                     <div class="relative mx-auto w-10 h-10">
-                                        @if($partner->profile_image)
+                                        @if($partner->profile_image && file_exists(public_path('uploads/profiles/' . $partner->profile_image)))
                                             <img src="{{ asset('uploads/profiles/' . $partner->profile_image) }}" class="w-10 h-10 rounded-full object-cover border border-slate-100 dark:border-slate-800 shadow" alt="Partner">
                                         @else
                                             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-xs uppercase border border-slate-100 shadow">

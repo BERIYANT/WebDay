@@ -25,7 +25,7 @@
             <!-- Avatar Upload Panel -->
             <div class="flex flex-col sm:flex-row items-center gap-6 p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-darkBorder/60">
                 <div class="relative">
-                    @if($user->profile_image)
+                    @if($user->profile_image && file_exists(public_path('uploads/profiles/' . $user->profile_image)))
                         <img src="{{ asset('uploads/profiles/' . $user->profile_image) }}" class="w-20 h-20 rounded-full object-cover border-2 border-white dark:border-darkCard shadow" alt="Avatar">
                     @else
                         <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-2xl uppercase border-2 border-white dark:border-darkCard shadow">

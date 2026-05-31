@@ -1,7 +1,7 @@
 @forelse($availablePartners as $candidate)
     <div class="bg-slate-50/50 dark:bg-slate-800/30 border border-slate-100 dark:border-darkBorder/40 p-4 rounded-2xl flex items-center justify-between gap-4 hover:scale-[1.01] transition-transform duration-200">
         <div class="flex items-center gap-3">
-            @if($candidate->profile_image)
+            @if($candidate->profile_image && file_exists(public_path('uploads/profiles/' . $candidate->profile_image)))
                 <img src="{{ asset('uploads/profiles/' . $candidate->profile_image) }}" class="w-10 h-10 rounded-full object-cover flex-shrink-0 shadow-sm" alt="Avatar">
             @else
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-xs uppercase shadow-sm flex-shrink-0">

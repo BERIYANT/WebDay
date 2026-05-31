@@ -233,7 +233,7 @@
                     <!-- Partner details box -->
                     <div class="bg-slate-50 dark:bg-slate-800/40 p-3 rounded-2xl border border-slate-100 dark:border-darkBorder/50 flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            @if($partner->profile_image)
+                            @if($partner->profile_image && file_exists(public_path('uploads/profiles/' . $partner->profile_image)))
                                 <img src="{{ asset('uploads/profiles/' . $partner->profile_image) }}" class="w-8 h-8 rounded-full object-cover" alt="Partner">
                             @else
                                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-orange-500 text-white font-bold flex items-center justify-center text-xs uppercase">
