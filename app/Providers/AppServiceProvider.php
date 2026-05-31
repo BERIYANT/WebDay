@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Bind custom public path for cPanel if public_html exists in the parent directory
+        if (file_exists(base_path('../public_html'))) {
+            $this->app->usePublicPath(base_path('../public_html'));
+        }
     }
 
     /**
