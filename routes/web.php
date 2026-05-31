@@ -29,6 +29,12 @@ Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallbac
 Route::post('/auth/google/select', [AuthController::class, 'selectGoogleAccount'])->name('auth.google.select');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Forgot & Reset Password Routes
+Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'sendOtp'])->name('password.email');
+Route::get('/reset-password', [AuthController::class, 'showResetPassword'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+
 // Authenticated Routes (Requires User to be logged in)
 Route::middleware(['auth'])->group(function () {
     

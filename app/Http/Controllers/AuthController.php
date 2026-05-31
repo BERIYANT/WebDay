@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendOtpMail;
 
 class AuthController extends Controller
 {
@@ -192,5 +195,99 @@ class AuthController extends Controller
 
         $user->last_login_date = $today;
         $user->save();
+    }
+
+    public function showForgotPassword()
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+        return view('auth.forgot-password');
+    }
+
+    public function sendOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ], [
+            'email.exists' => 'Email ini tidak terdaftar di sistem kami.'
+        ]);
+
+        $email = $request->email;
+        $user = User::where('email', $email)->first();
+
+        // Generate 6 digit OTP
+        $otp = mt_rand(100000, 999999);
+
+        // Save to password_reset_tokens table
+        DB::table('password_reset_tokens')->where('email', $email)->delete();
+        DB::table('password_reset_tokens')->insert([
+            'email' => $email,
+            'token' => $otp,
+            'created_at' => Carbon::now()
+        ]);
+
+        // Send Email
+        try {
+            Mail::to($email)->send(new SendOtpMail($otp, $user->name));
+        } catch (\Exception $e) {
+            return back()->withErrors([
+                'email' => 'Gagal mengirim email OTP: ' . $e->getMessage()
+            ])->withInput();
+        }
+
+        // Redirect to Reset Password Page with prefilled email
+        return redirect()->route('password.reset', ['email' => $email])->with('success', 'Kode OTP pemulihan kata sandi telah dikirim ke email Anda.');
+    }
+
+    public function showResetPassword(Request $request)
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+        $email = $request->query('email');
+        return view('auth.reset-password', compact('email'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'otp' => 'required|numeric|digits:6',
+            'password' => 'required|string|min:6|confirmed'
+        ], [
+            'otp.digits' => 'Kode OTP harus berupa 6 digit angka.',
+            'password.min' => 'Password baru minimal harus 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.'
+        ]);
+
+        $resetToken = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->first();
+
+        if (!$resetToken) {
+            return back()->withErrors(['otp' => 'Permintaan OTP tidak valid atau belum diajukan.'])->withInput();
+        }
+
+        // Check matching OTP
+        if ($resetToken->token != $request->otp) {
+            return back()->withErrors(['otp' => 'Kode OTP yang Anda masukkan salah.'])->withInput();
+        }
+
+        // Check expiry (15 minutes)
+        $expiryTime = Carbon::parse($resetToken->created_at)->addMinutes(15);
+        if ($expiryTime->isPast()) {
+            return back()->withErrors(['otp' => 'Kode OTP telah kedaluwarsa. Silakan ajukan ulang kode baru.'])->withInput();
+        }
+
+        // Update password
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Delete used token
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+        return redirect()->route('login')->with('success', 'Kata sandi Anda berhasil diperbarui! Silakan masuk.');
     }
 }
