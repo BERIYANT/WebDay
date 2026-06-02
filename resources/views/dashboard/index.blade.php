@@ -364,11 +364,11 @@
         function appendMessage(senderId, text, scroll = true) {
             if (!chatMessages) return;
             const container = document.createElement('div');
-            container.className = `flex flex-col ${senderId === currentUserId ? 'items-end' : 'items-start'}`;
+            container.className = `flex flex-col ${senderId == currentUserId ? 'items-end' : 'items-start'}`;
 
             const bubble = document.createElement('div');
             bubble.className = `max-w-[80%] rounded-2xl px-3.5 py-2.5 font-semibold leading-relaxed shadow-sm ${
-                senderId === currentUserId 
+                senderId == currentUserId 
                     ? 'bg-primary-600 text-white rounded-tr-none' 
                     : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-100 dark:border-darkBorder rounded-tl-none'
             }`;
